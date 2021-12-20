@@ -23,17 +23,27 @@ export class ProvideImageService {
     providingUser: User,
   ): Promise<{ ok: boolean; error?: string }> {
     try {
+      // image container은 1~15 그 중 하나 출력
       let randNum = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+
+      // 추출한 random dice number을 통해 imagecontainer의 dicenumber 1~15중 하나를 가져옴
       const image = this.imageContainer.findOne({ diceNumber: randNum });
+
+      //랜덤 image의 amazon s3 image url 추출
       const imageURL = (await image).imageUrl;
+
+      //check를 포함하는 token발급
       const VerifyToken = this.jwtService.signToken({
         check: 'copyright of the better people Inc.',
       });
-      console.log(VerifyToken);
+
+      // provide image create
       const newProvideImage = this.provideImage.create({
         token: VerifyToken,
         imageUrl: imageURL,
       });
+
+      //relation에 의한 resolver(context)에서 받아오는 user relation등록
       newProvideImage.providingUser = providingUser;
       await this.provideImage.save(newProvideImage);
       return { ok: true };

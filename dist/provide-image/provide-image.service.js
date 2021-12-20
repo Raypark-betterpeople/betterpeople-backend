@@ -34,7 +34,6 @@ let ProvideImageService = class ProvideImageService {
             const VerifyToken = this.jwtService.signToken({
                 check: 'copyright of the better people Inc.',
             });
-            console.log(VerifyToken);
             const newProvideImage = this.provideImage.create({
                 token: VerifyToken,
                 imageUrl: imageURL,

@@ -35,6 +35,7 @@ export class ProvideImageResolver {
     }
   }
 
+  //쿼리
   @Query(() => Boolean)
   hi() {
     return true;

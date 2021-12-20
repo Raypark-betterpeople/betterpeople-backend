@@ -42,9 +42,6 @@ let ProvideImageResolver = class ProvideImageResolver {
             };
         }
     }
-    hi() {
-        return true;
-    }
 };
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
@@ -54,12 +51,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ProvideImageResolver.prototype, "createProvideImage", null);
-__decorate([
-    (0, graphql_1.Query)(() => Boolean),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ProvideImageResolver.prototype, "hi", null);
 ProvideImageResolver = __decorate([
     (0, graphql_2.Resolver)(() => provide_image_entity_1.ProvideImage),
     __metadata("design:paramtypes", [provide_image_service_1.ProvideImageService])

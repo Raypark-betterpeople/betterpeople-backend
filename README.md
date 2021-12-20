@@ -11,4 +11,4 @@
 
 ## 더 좋은 사람들 (save earth) 프로젝트 백 엔드
 
-<p>2021/12/20 Repository partision</p>
+<p>2021/12/20 Repository partision!</p>

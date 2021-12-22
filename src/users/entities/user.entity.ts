@@ -30,9 +30,13 @@ export class User extends CoreEntity {
   @IsString()
   profileImg?: string;
 
-  @Field((type) => ProvideImage, {nullable: true})
-  @OneToMany((type) => ProvideImage, (provideImage) => provideImage.providingUser)
-  provideImage: ProvideImage[];
+  @Field((type) => [ProvideImage], { nullable: true })
+  @OneToMany(
+    (type) => ProvideImage,
+    (provideImage) => provideImage.providingUser,
+    {eager: true}
+  )
+  provideImage?: ProvideImage[];
 
   @BeforeInsert()
   async hashPassword(): Promise<void> {

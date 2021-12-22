@@ -78,6 +78,7 @@ export class UserResolver {
     } else {
       try {
         const user = await this.userService.findById(userProfileInput.userId);
+        console.log(user)
         if (!user) {
           throw Error;
         }
@@ -108,7 +109,7 @@ export class UserResolver {
         await this.userService.editProfile(user['id'], editProfileInput);
         return {
           ok: true,
-        }
+        };
       } catch (error) {
         return {
           ok: false,

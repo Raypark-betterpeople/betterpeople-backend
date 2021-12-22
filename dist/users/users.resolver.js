@@ -77,6 +77,7 @@ let UserResolver = class UserResolver {
         else {
             try {
                 const user = await this.userService.findById(userProfileInput.userId);
+                console.log(user);
                 if (!user) {
                     throw Error;
                 }

@@ -9,7 +9,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 @ObjectType()
 @Entity()
 export class ProvideImage extends CoreEntity {
-  @ManyToOne((type) => User, (user) => user.provideImage)
+  @ManyToOne((type) => User , (user) => user.provideImage)
   providingUser: User;
 
   @Column()

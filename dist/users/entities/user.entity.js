@@ -63,8 +63,8 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "profileImg", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => provide_image_entity_1.ProvideImage, { nullable: true }),
-    (0, typeorm_1.OneToMany)((type) => provide_image_entity_1.ProvideImage, (provideImage) => provideImage.providingUser),
+    (0, graphql_1.Field)((type) => [provide_image_entity_1.ProvideImage], { nullable: true }),
+    (0, typeorm_1.OneToMany)((type) => provide_image_entity_1.ProvideImage, (provideImage) => provideImage.providingUser, { eager: true }),
     __metadata("design:type", Array)
 ], User.prototype, "provideImage", void 0);
 __decorate([

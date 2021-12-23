@@ -46,6 +46,9 @@ let ProvideImageService = class ProvideImageService {
             return { ok: false, error: '이미지를 생성할 수 없습니다.' };
         }
     }
+    async findByToken(token) {
+        return this.provideImage.findOne({ token });
+    }
 };
 ProvideImageService = __decorate([
     (0, common_1.Injectable)(),

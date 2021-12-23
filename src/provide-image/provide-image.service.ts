@@ -51,4 +51,8 @@ export class ProvideImageService {
       return { ok: false, error: '이미지를 생성할 수 없습니다.' };
     }
   }
+
+  async findByToken(token: string): Promise<ProvideImage> {
+    return this.provideImage.findOne({token});
+  }
 }

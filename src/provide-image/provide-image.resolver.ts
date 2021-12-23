@@ -1,17 +1,19 @@
 import { UseGuards } from '@nestjs/common';
-import { Context, Mutation, Query } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateProvideImageOutput } from './dtos/create-provide-image.dto';
 import {
-  CreateProvideImageOutput,
-} from './dtos/create-provide-image.dto';
+  VerifyImageSearchInput,
+  VerifyImageSearchOutput,
+} from './dtos/verify-image-search.dto';
 import { ProvideImage } from './entities/provide-image.entity';
 import { ProvideImageService } from './provide-image.service';
 
 @Resolver(() => ProvideImage)
 export class ProvideImageResolver {
   constructor(private readonly provideImageService: ProvideImageService) {}
-  
+
   @UseGuards(AuthGuard)
   @Mutation(() => CreateProvideImageOutput)
   async createProvideImage(
@@ -34,6 +36,25 @@ export class ProvideImageResolver {
         ok: false,
         error: '이미지를 생성할 수 없습니다. 이메일을 통해 문의해주세요.',
       };
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Query(() => VerifyImageSearchOutput)
+  async searchVerifyImage(
+    @Args('input') verifyImageSearchInput: VerifyImageSearchInput,
+  ): Promise<VerifyImageSearchOutput> {
+    try {
+      const verifyImage = await this.provideImageService.findByToken(verifyImageSearchInput.token)
+      return {
+        ok: true,
+        verifyImage
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        error: "인증된 이미지를 찾을 수 없습니다."
+      }
     }
   }
 }

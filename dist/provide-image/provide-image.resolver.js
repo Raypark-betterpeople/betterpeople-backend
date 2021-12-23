@@ -18,6 +18,7 @@ const graphql_1 = require("@nestjs/graphql");
 const graphql_2 = require("@nestjs/graphql");
 const auth_guard_1 = require("../auth/auth.guard");
 const create_provide_image_dto_1 = require("./dtos/create-provide-image.dto");
+const verify_image_search_dto_1 = require("./dtos/verify-image-search.dto");
 const provide_image_entity_1 = require("./entities/provide-image.entity");
 const provide_image_service_1 = require("./provide-image.service");
 let ProvideImageResolver = class ProvideImageResolver {
@@ -42,6 +43,21 @@ let ProvideImageResolver = class ProvideImageResolver {
             };
         }
     }
+    async searchVerifyImage(verifyImageSearchInput) {
+        try {
+            const verifyImage = await this.provideImageService.findByToken(verifyImageSearchInput.token);
+            return {
+                ok: true,
+                verifyImage
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: "인증된 이미지를 찾을 수 없습니다."
+            };
+        }
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
@@ -51,6 +67,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ProvideImageResolver.prototype, "createProvideImage", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, graphql_1.Query)(() => verify_image_search_dto_1.VerifyImageSearchOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [verify_image_search_dto_1.VerifyImageSearchInput]),
+    __metadata("design:returntype", Promise)
+], ProvideImageResolver.prototype, "searchVerifyImage", null);
 ProvideImageResolver = __decorate([
     (0, graphql_2.Resolver)(() => provide_image_entity_1.ProvideImage),
     __metadata("design:paramtypes", [provide_image_service_1.ProvideImageService])

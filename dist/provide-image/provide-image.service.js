@@ -47,7 +47,7 @@ let ProvideImageService = class ProvideImageService {
         }
     }
     async findByToken(token) {
-        return this.provideImage.findOne({ token });
+        return this.provideImage.findOne({ token }, { relations: ['providingUser'] });
     }
 };
 ProvideImageService = __decorate([

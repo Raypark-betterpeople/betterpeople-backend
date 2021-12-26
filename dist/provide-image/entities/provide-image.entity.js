@@ -17,6 +17,7 @@ const typeorm_1 = require("typeorm");
 let ProvideImage = class ProvideImage extends core_entity_1.CoreEntity {
 };
 __decorate([
+    (0, graphql_1.Field)(() => user_entity_1.User),
     (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, (user) => user.provideImage),
     __metadata("design:type", user_entity_1.User)
 ], ProvideImage.prototype, "providingUser", void 0);

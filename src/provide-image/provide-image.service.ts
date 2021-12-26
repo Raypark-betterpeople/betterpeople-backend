@@ -53,6 +53,6 @@ export class ProvideImageService {
   }
 
   async findByToken(token: string): Promise<ProvideImage> {
-    return this.provideImage.findOne({token});
+    return this.provideImage.findOne({token}, {relations: ['providingUser']});
   }
 }

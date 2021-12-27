@@ -39,6 +39,7 @@ export class ProvideImageResolver {
     }
   }
 
+  //인증 토큰을 통해, 인증된 이미지를 찾는 mutation
   @UseGuards(AuthGuard)
   @Query(() => VerifyImageSearchOutput)
   async searchVerifyImage(

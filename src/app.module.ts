@@ -12,6 +12,7 @@ import { JwtMiddleWare } from './jwt/jwt.middleware';
 import { AuthModule } from './auth/auth.module';
 import { ProvideImageModule } from './provide-image/provide-image.module';
 import { ProvideImage } from './provide-image/entities/provide-image.entity';
+import { Verification } from './users/entities/verification.entity';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { ProvideImage } from './provide-image/entities/provide-image.entity';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: process.env.NODE_ENV !== 'prod',
-      entities: [User, ImageContainer, ProvideImage],
+      entities: [User, ImageContainer, ProvideImage, Verification],
     }),
     JwtModule.forRoot({
       privateKey: process.env.TOKEN_SECRET,

@@ -21,6 +21,7 @@ const jwt_middleware_1 = require("./jwt/jwt.middleware");
 const auth_module_1 = require("./auth/auth.module");
 const provide_image_module_1 = require("./provide-image/provide-image.module");
 const provide_image_entity_1 = require("./provide-image/entities/provide-image.entity");
+const verification_entity_1 = require("./users/entities/verification.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(jwt_middleware_1.JwtMiddleWare).forRoutes({
@@ -50,7 +51,7 @@ AppModule = __decorate([
                 database: process.env.DB_NAME,
                 synchronize: process.env.NODE_ENV !== 'prod',
                 logging: process.env.NODE_ENV !== 'prod',
-                entities: [user_entity_1.User, image_container_1.ImageContainer, provide_image_entity_1.ProvideImage],
+                entities: [user_entity_1.User, image_container_1.ImageContainer, provide_image_entity_1.ProvideImage, verification_entity_1.Verification],
             }),
             jwt_module_1.JwtModule.forRoot({
                 privateKey: process.env.TOKEN_SECRET,

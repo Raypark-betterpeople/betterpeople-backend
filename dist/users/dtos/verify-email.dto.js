@@ -6,20 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EditProfileOutput = exports.EditProfileInput = void 0;
+exports.VerifyEmailInput = exports.VerifyEmailOutput = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const output_dto_1 = require("../../common/dtos/output.dto");
-const user_entity_1 = require("../entities/user.entity");
-let EditProfileInput = class EditProfileInput extends (0, graphql_1.PartialType)((0, graphql_1.PickType)(user_entity_1.User, ['nickname', 'password', 'email'])) {
+const verification_entity_1 = require("../entities/verification.entity");
+let VerifyEmailOutput = class VerifyEmailOutput extends output_dto_1.MutationOutput {
 };
-EditProfileInput = __decorate([
-    (0, graphql_1.InputType)()
-], EditProfileInput);
-exports.EditProfileInput = EditProfileInput;
-let EditProfileOutput = class EditProfileOutput extends output_dto_1.MutationOutput {
-};
-EditProfileOutput = __decorate([
+VerifyEmailOutput = __decorate([
     (0, graphql_1.ObjectType)()
-], EditProfileOutput);
-exports.EditProfileOutput = EditProfileOutput;
-//# sourceMappingURL=edit-profile.dto.js.map
+], VerifyEmailOutput);
+exports.VerifyEmailOutput = VerifyEmailOutput;
+let VerifyEmailInput = class VerifyEmailInput extends (0, graphql_1.PickType)(verification_entity_1.Verification, ['code']) {
+};
+VerifyEmailInput = __decorate([
+    (0, graphql_1.InputType)()
+], VerifyEmailInput);
+exports.VerifyEmailInput = VerifyEmailInput;
+//# sourceMappingURL=verify-email.dto.js.map

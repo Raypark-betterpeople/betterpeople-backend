@@ -12,25 +12,35 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtService = void 0;
+exports.MailService = void 0;
 const common_1 = require("@nestjs/common");
 const common_constant_1 = require("../common/common.constant");
-const jwt = require("jsonwebtoken");
-let JwtService = class JwtService {
+const got_1 = require("got");
+const FormData = require("form-data");
+let MailService = class MailService {
     constructor(options) {
         this.options = options;
     }
-    signToken(payload) {
-        return jwt.sign(payload, this.options.privateKey);
-    }
-    verifyToken(token) {
-        return jwt.verify(token, this.options.privateKey);
+    async sendEmail(subject, content, toEmail) {
+        const form = new FormData();
+        form.append('from', `Excited User <mailgun@${this.options.domain}>`);
+        form.append('to', toEmail);
+        form.append('text', content);
+        form.append('subject', subject);
+        const response = await (0, got_1.default)(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
+            method: "POST",
+            headers: {
+                Authorization: `Basic ${Buffer.from(`api:${this.options.apiKey}`).toString('base64')}`,
+            },
+            body: form,
+        });
+        console.log(response.body);
     }
 };
-JwtService = __decorate([
+MailService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)(common_constant_1.CONFIG_OPTIONS)),
     __metadata("design:paramtypes", [Object])
-], JwtService);
-exports.JwtService = JwtService;
-//# sourceMappingURL=jwt.service.js.map
+], MailService);
+exports.MailService = MailService;
+//# sourceMappingURL=mail.service.js.map

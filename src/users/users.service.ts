@@ -7,6 +7,7 @@ import { User } from './entities/user.entity';
 import { JwtService } from 'src/jwt/jwt.service';
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { Verification } from './entities/verification.entity';
+import { VerifyEmailOutput } from './dtos/verify-email.dto';
 
 @Injectable()
 export class UsersService {
@@ -57,7 +58,7 @@ export class UsersService {
           error: '존재하지 않는 이메일입니다.',
         };
       }
-      console.log(user.password)
+      console.log(user.password);
       const passwordCorrect = await (await user).checkPassword(password);
       if (!passwordCorrect) {
         return {
@@ -94,31 +95,40 @@ export class UsersService {
       if (editProfileInput.email && editProfileInput.email !== user.email) {
         user.email = editProfileInput.email;
         user.emailVerified = false;
+        await this.verifications.delete({ user: { id: user.id } });
+        const verification = await this.verifications.save(
+          this.verifications.create({ user }),
+        );
       }
-      if(editProfileInput.password) {
+      if (editProfileInput.password) {
         user.password = editProfileInput.password;
       }
-      if(editProfileInput.nickname) {
-        user.nickname = editProfileInput.nickname
+      if (editProfileInput.nickname) {
+        user.nickname = editProfileInput.nickname;
       }
-      await this.users.save(user)
+      await this.users.save(user);
       return {
-        ok: true
-      }
+        ok: true,
+      };
     } catch (error) {
-      return {ok: false, error:"업데이트를 할 수 없습니다."}
+      return { ok: false, error: '업데이트를 할 수 없습니다.' };
     }
   }
 
-  async verifyEmail(code: string): Promise<boolean> {
-    const verification = await this.verifications.findOne(
-      { code },
-      { relations: ['user'] },
-    );
-    if (verification) {
-      verification.user.emailVerified = true;
-      this.users.save(verification.user);
+  async verifyEmail(code: string): Promise<VerifyEmailOutput> {
+    try {
+      const verification = await this.verifications.findOne(
+        { code },
+        { relations: ['user'] },
+      );
+      if (verification) {
+        verification.user.emailVerified = true;
+        await this.users.save(verification.user);
+        await this.verifications.delete(verification.id);
+        return { ok: true };
+      }
+    } catch (error) {
+      return { ok: false, error: '메일을 인증할 수 없습니다.' };
     }
-    return false;
   }
 }

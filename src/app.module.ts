@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProvideImageModule } from './provide-image/provide-image.module';
 import { ProvideImage } from './provide-image/entities/provide-image.entity';
 import { Verification } from './users/entities/verification.entity';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -23,7 +29,7 @@ import { Verification } from './users/entities/verification.entity';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      context: ({req}) => ({user: req['user']}),
+      context: ({ req }) => ({ user: req['user'] }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -39,11 +45,17 @@ import { Verification } from './users/entities/verification.entity';
     JwtModule.forRoot({
       privateKey: process.env.TOKEN_SECRET,
     }),
+    MailModule.forRoot({
+      apiKey: process.env.MAILGUN_API_KEY,
+      fromEmail: process.env.MAILGUN_FROM_EMAIL,
+      domain: process.env.MAILGUN_DOMAIN_NAME,
+    }),
     UsersModule,
     CommonModule,
     ImageContainerModule,
     AuthModule,
     ProvideImageModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

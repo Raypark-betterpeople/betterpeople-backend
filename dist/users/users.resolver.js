@@ -116,7 +116,7 @@ let UserResolver = class UserResolver {
         }
     }
     verifyEmail(verifyEmailInput) {
-        this.userService.verifyEmail(verifyEmailInput.code);
+        return this.userService.verifyEmail(verifyEmailInput.code);
     }
 };
 __decorate([
@@ -164,7 +164,7 @@ __decorate([
     __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [verify_email_dto_1.VerifyEmailInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "verifyEmail", null);
 UserResolver = __decorate([
     (0, graphql_1.Resolver)(() => user_entity_1.User),

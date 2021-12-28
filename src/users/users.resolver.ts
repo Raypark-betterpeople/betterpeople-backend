@@ -79,7 +79,7 @@ export class UserResolver {
     } else {
       try {
         const user = await this.userService.findById(userProfileInput.userId);
-        console.log(user)
+        console.log(user);
         if (!user) {
           throw Error;
         }
@@ -121,7 +121,9 @@ export class UserResolver {
   }
 
   @Mutation(() => VerifyEmailOutput)
-  verifyEmail(@Args('input') verifyEmailInput: VerifyEmailInput) {
-    this.userService.verifyEmail(verifyEmailInput.code)
+  verifyEmail(
+    @Args('input') verifyEmailInput: VerifyEmailInput,
+  ): Promise<VerifyEmailOutput> {
+    return this.userService.verifyEmail(verifyEmailInput.code);
   }
 }

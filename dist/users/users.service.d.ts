@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { JwtService } from 'src/jwt/jwt.service';
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { Verification } from './entities/verification.entity';
+import { VerifyEmailOutput } from './dtos/verify-email.dto';
 export declare class UsersService {
     private readonly users;
     private readonly verifications;
@@ -21,5 +22,5 @@ export declare class UsersService {
     }>;
     findById(id: number): Promise<User>;
     editProfile(id: number, editProfileInput: EditProfileInput): Promise<EditProfileOutput>;
-    verifyEmail(code: string): Promise<boolean>;
+    verifyEmail(code: string): Promise<VerifyEmailOutput>;
 }

@@ -22,6 +22,7 @@ const auth_module_1 = require("./auth/auth.module");
 const provide_image_module_1 = require("./provide-image/provide-image.module");
 const provide_image_entity_1 = require("./provide-image/entities/provide-image.entity");
 const verification_entity_1 = require("./users/entities/verification.entity");
+const mail_module_1 = require("./mail/mail.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(jwt_middleware_1.JwtMiddleWare).forRoutes({
@@ -56,11 +57,17 @@ AppModule = __decorate([
             jwt_module_1.JwtModule.forRoot({
                 privateKey: process.env.TOKEN_SECRET,
             }),
+            mail_module_1.MailModule.forRoot({
+                apiKey: process.env.MAILGUN_API_KEY,
+                fromEmail: process.env.MAILGUN_FROM_EMAIL,
+                domain: process.env.MAILGUN_DOMAIN_NAME,
+            }),
             users_module_1.UsersModule,
             common_module_1.CommonModule,
             image_container_module_1.ImageContainerModule,
             auth_module_1.AuthModule,
             provide_image_module_1.ProvideImageModule,
+            mail_module_1.MailModule,
         ],
         controllers: [],
         providers: [],

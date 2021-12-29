@@ -20,22 +20,30 @@ const FormData = require("form-data");
 let MailService = class MailService {
     constructor(options) {
         this.options = options;
-        this.sendEmail('testing', 'test', 'devjun0421@gmail.com');
     }
-    async sendEmail(subject, content, toEmail) {
+    async sendEmail(subject, toEmail, template, code, username) {
         const form = new FormData();
         form.append('from', `Betterpeople Inc. <contact@${this.options.domain}>`);
         form.append('to', toEmail);
-        form.append('text', content);
         form.append('subject', subject);
-        const response = await (0, got_1.default)(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Basic ${Buffer.from(`api:${this.options.apiKey}`).toString('base64')}`,
-            },
-            body: form,
-        });
-        console.log(response.body);
+        form.append('template', template);
+        form.append('v:code', code);
+        form.append('v:username', username);
+        try {
+            await (0, got_1.default)(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Basic ${Buffer.from(`api:${this.options.apiKey}`).toString('base64')}`,
+                },
+                body: form,
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    sendVerificationEmail(toEmail, code, username) {
+        this.sendEmail('이메일을 인증해주세요! - Better people Inc.', toEmail, 'betterpeople', code, username);
     }
 };
 MailService = __decorate([

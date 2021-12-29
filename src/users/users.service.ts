@@ -8,6 +8,7 @@ import { JwtService } from 'src/jwt/jwt.service';
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { Verification } from './entities/verification.entity';
 import { VerifyEmailOutput } from './dtos/verify-email.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,7 @@ export class UsersService {
     @InjectRepository(Verification)
     private readonly verifications: Repository<Verification>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {}
 
   async createAccount({
@@ -36,7 +38,14 @@ export class UsersService {
       const user = await this.users.save(
         this.users.create({ email, nickname, password, profileImg }),
       );
-      await this.verifications.save(this.verifications.create({ user }));
+      const verification = await this.verifications.save(
+        this.verifications.create({ user }),
+      );
+      this.mailService.sendVerificationEmail(
+        user.email,
+        verification.code,
+        user.nickname,
+      );
       return { ok: true };
     } catch (error) {
       return { ok: false, error: '계정을 생성할 수 없습니다.' };
@@ -98,6 +107,11 @@ export class UsersService {
         await this.verifications.delete({ user: { id: user.id } });
         const verification = await this.verifications.save(
           this.verifications.create({ user }),
+        );
+        this.mailService.sendVerificationEmail(
+          user.email,
+          verification.code,
+          user.nickname,
         );
       }
       if (editProfileInput.password) {

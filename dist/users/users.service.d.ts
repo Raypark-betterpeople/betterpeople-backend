@@ -6,11 +6,13 @@ import { JwtService } from 'src/jwt/jwt.service';
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { Verification } from './entities/verification.entity';
 import { VerifyEmailOutput } from './dtos/verify-email.dto';
+import { MailService } from 'src/mail/mail.service';
 export declare class UsersService {
     private readonly users;
     private readonly verifications;
     private readonly jwtService;
-    constructor(users: Repository<User>, verifications: Repository<Verification>, jwtService: JwtService);
+    private readonly mailService;
+    constructor(users: Repository<User>, verifications: Repository<Verification>, jwtService: JwtService, mailService: MailService);
     createAccount({ email, password, nickname, profileImg, }: CreateAccountInput): Promise<{
         ok: boolean;
         error?: string;

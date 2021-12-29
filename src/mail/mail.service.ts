@@ -8,27 +8,40 @@ import * as FormData from 'form-data';
 export class MailService {
   constructor(
     @Inject(CONFIG_OPTIONS) private readonly options: MailModuleOptions,
+  ) {}
+  private async sendEmail(
+    subject: string,
+    toEmail: string,
+    template: string,
+    code: string,
+    username: string,
   ) {
-    this.sendEmail('testing', 'test', 'devjun0421@gmail.com');
-  }
-  private async sendEmail(subject: string, content: string, toEmail: string) {
     const form = new FormData();
     form.append('from', `Betterpeople Inc. <contact@${this.options.domain}>`);
-    form.append('to', toEmail)
-    form.append('text', content);
+    form.append('to', toEmail);
     form.append('subject', subject);
-    const response = await got(
-      `https://api.mailgun.net/v3/${this.options.domain}/messages`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${Buffer.from(
-            `api:${this.options.apiKey}`,
-          ).toString('base64')}`,
+    form.append('template', template);
+    form.append('v:code', code);
+    form.append('v:username', username);
+    try {
+      await got(
+        `https://api.mailgun.net/v3/${this.options.domain}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Basic ${Buffer.from(
+              `api:${this.options.apiKey}`,
+            ).toString('base64')}`,
+          },
+          body: form,
         },
-        body: form,
-      },
-    );
-    console.log(response.body);
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  sendVerificationEmail(toEmail:string, code:string, username: string) {
+    this.sendEmail('이메일을 인증해주세요! - Better people Inc.', toEmail, 'betterpeople', code, username)
   }
 }

@@ -27,7 +27,8 @@ let MailModule = MailModule_1 = class MailModule {
     }
 };
 MailModule = MailModule_1 = __decorate([
-    (0, common_1.Module)({})
+    (0, common_1.Module)({}),
+    (0, common_1.Global)()
 ], MailModule);
 exports.MailModule = MailModule;
 //# sourceMappingURL=mail.module.js.map

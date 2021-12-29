@@ -20,15 +20,16 @@ const FormData = require("form-data");
 let MailService = class MailService {
     constructor(options) {
         this.options = options;
+        this.sendEmail('testing', 'test', 'devjun0421@gmail.com');
     }
     async sendEmail(subject, content, toEmail) {
         const form = new FormData();
-        form.append('from', `Excited User <mailgun@${this.options.domain}>`);
+        form.append('from', `Betterpeople Inc. <contact@${this.options.domain}>`);
         form.append('to', toEmail);
         form.append('text', content);
         form.append('subject', subject);
         const response = await (0, got_1.default)(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
-            method: "POST",
+            method: 'POST',
             headers: {
                 Authorization: `Basic ${Buffer.from(`api:${this.options.apiKey}`).toString('base64')}`,
             },

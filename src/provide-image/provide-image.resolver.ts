@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { CreateProvideImageOutput } from './dtos/create-provide-image.dto';
+import { CreateProvideImageInput, CreateProvideImageOutput } from './dtos/create-provide-image.dto';
 import {
   VerifyImageSearchInput,
   VerifyImageSearchOutput,
@@ -18,6 +18,7 @@ export class ProvideImageResolver {
   @Mutation(() => CreateProvideImageOutput)
   async createProvideImage(
     //graphql context
+    @Args('input') createProvideImageInput: CreateProvideImageInput,
     @Context() context,
   ): Promise<CreateProvideImageOutput> {
     try {
@@ -25,6 +26,7 @@ export class ProvideImageResolver {
       const user = context.user;
       const { ok, error } = await this.provideImageService.createProvideImage(
         user,
+        createProvideImageInput,
       );
       if (ok) {
         return { ok: true };

@@ -19,6 +19,8 @@ import { ProvideImageModule } from './provide-image/provide-image.module';
 import { ProvideImage } from './provide-image/entities/provide-image.entity';
 import { Verification } from './users/entities/verification.entity';
 import { MailModule } from './mail/mail.module';
+import { DonateSessionModule } from './donate-session/donate-session.module';
+import { DonateSession } from './donate-session/entities/donate-session.entity';
 
 @Module({
   imports: [
@@ -40,7 +42,7 @@ import { MailModule } from './mail/mail.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: process.env.NODE_ENV !== 'prod',
-      entities: [User, ImageContainer, ProvideImage, Verification],
+      entities: [User, ImageContainer, ProvideImage, Verification, DonateSession],
     }),
     JwtModule.forRoot({
       privateKey: process.env.TOKEN_SECRET,
@@ -56,6 +58,7 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     ProvideImageModule,
     MailModule,
+    DonateSessionModule,
   ],
   controllers: [],
   providers: [],

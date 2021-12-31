@@ -20,18 +20,21 @@ const typeorm_2 = require("typeorm");
 const provide_image_entity_1 = require("./entities/provide-image.entity");
 const user_entity_1 = require("../users/entities/user.entity");
 const jwt_service_1 = require("../jwt/jwt.service");
+const donate_session_entity_1 = require("../donate-session/entities/donate-session.entity");
 let ProvideImageService = class ProvideImageService {
-    constructor(provideImage, imageContainer, jwtService) {
+    constructor(provideImage, donates, images, jwtService) {
         this.provideImage = provideImage;
-        this.imageContainer = imageContainer;
+        this.donates = donates;
+        this.images = images;
         this.jwtService = jwtService;
     }
-    async createProvideImage(providingUser) {
+    async createProvideImage(providingUser, { donateId }) {
         try {
-            let randNum = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
-            const image = this.imageContainer.findOne({ diceNumber: randNum });
-            const imageURL = (await image).imageUrl;
-            const VerifyToken = this.jwtService.signToken({
+            const donateSession = await this.donates.findOne({ id: donateId });
+            const donateImages = await this.images.find({ donate: donateSession });
+            let randNum = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+            const imageURL = await donateImages[randNum].imageUrl;
+            const VerifyToken = await this.jwtService.signToken({
                 check: 'copyright of the better people Inc.',
             });
             const newProvideImage = this.provideImage.create({
@@ -43,7 +46,7 @@ let ProvideImageService = class ProvideImageService {
             return { ok: true };
         }
         catch (error) {
-            return { ok: false, error: '이미지를 생성할 수 없습니다.' };
+            return { ok: false, error };
         }
     }
     async findByToken(token) {
@@ -53,8 +56,10 @@ let ProvideImageService = class ProvideImageService {
 ProvideImageService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(provide_image_entity_1.ProvideImage)),
-    __param(1, (0, typeorm_1.InjectRepository)(image_container_1.ImageContainer)),
+    __param(1, (0, typeorm_1.InjectRepository)(donate_session_entity_1.DonateSession)),
+    __param(2, (0, typeorm_1.InjectRepository)(image_container_1.ImageContainer)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         jwt_service_1.JwtService])
 ], ProvideImageService);

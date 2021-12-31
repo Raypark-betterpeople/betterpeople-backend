@@ -25,10 +25,10 @@ let ProvideImageResolver = class ProvideImageResolver {
     constructor(provideImageService) {
         this.provideImageService = provideImageService;
     }
-    async createProvideImage(context) {
+    async createProvideImage(createProvideImageInput, context) {
         try {
             const user = context.user;
-            const { ok, error } = await this.provideImageService.createProvideImage(user);
+            const { ok, error } = await this.provideImageService.createProvideImage(user, createProvideImageInput);
             if (ok) {
                 return { ok: true };
             }
@@ -62,9 +62,10 @@ let ProvideImageResolver = class ProvideImageResolver {
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, graphql_1.Mutation)(() => create_provide_image_dto_1.CreateProvideImageOutput),
-    __param(0, (0, graphql_1.Context)()),
+    __param(0, (0, graphql_1.Args)('input')),
+    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [create_provide_image_dto_1.CreateProvideImageInput, Object]),
     __metadata("design:returntype", Promise)
 ], ProvideImageResolver.prototype, "createProvideImage", null);
 __decorate([

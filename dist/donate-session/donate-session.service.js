@@ -33,6 +33,21 @@ let DonateSessionService = class DonateSessionService {
             };
         }
     }
+    async allDonate() {
+        try {
+            const donates = await this.donations.find();
+            return {
+                donates,
+                ok: true,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error
+            };
+        }
+    }
 };
 DonateSessionService = __decorate([
     (0, common_1.Injectable)(),

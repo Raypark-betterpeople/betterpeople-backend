@@ -1,4 +1,5 @@
 import { Repository } from 'typeorm';
+import { AllDonateOutput } from './dtos/all-donate.dto';
 import { CreateDonateInput } from './dtos/create-donate.dto';
 import { DonateSession } from './entities/donate-session.entity';
 export declare class DonateSessionService {
@@ -8,4 +9,5 @@ export declare class DonateSessionService {
         ok: boolean;
         error?: string;
     }>;
+    allDonate(): Promise<AllDonateOutput>;
 }

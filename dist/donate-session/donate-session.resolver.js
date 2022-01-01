@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DonateSessionResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const donate_session_service_1 = require("./donate-session.service");
+const all_donate_dto_1 = require("./dtos/all-donate.dto");
 const create_donate_dto_1 = require("./dtos/create-donate.dto");
 const donate_session_entity_1 = require("./entities/donate-session.entity");
 let DonateSessionResolver = class DonateSessionResolver {
@@ -36,6 +37,9 @@ let DonateSessionResolver = class DonateSessionResolver {
             return { ok: false, error: '도네이션 섹션을 만들 수 없습니다.' };
         }
     }
+    allDonate() {
+        return this.donateSessionService.allDonate();
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => create_donate_dto_1.CreateDonateOutput),
@@ -44,6 +48,12 @@ __decorate([
     __metadata("design:paramtypes", [create_donate_dto_1.CreateDonateInput]),
     __metadata("design:returntype", Promise)
 ], DonateSessionResolver.prototype, "createDonate", null);
+__decorate([
+    (0, graphql_1.Query)(() => all_donate_dto_1.AllDonateOutput),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DonateSessionResolver.prototype, "allDonate", null);
 DonateSessionResolver = __decorate([
     (0, graphql_1.Resolver)(() => donate_session_entity_1.DonateSession),
     __metadata("design:paramtypes", [donate_session_service_1.DonateSessionService])

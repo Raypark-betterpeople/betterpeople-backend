@@ -1,5 +1,6 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { DonateSessionService } from './donate-session.service';
+import { AllDonateOutput } from './dtos/all-donate.dto';
 import {
   CreateDonateInput,
   CreateDonateOutput,
@@ -27,5 +28,10 @@ export class DonateSessionResolver {
     } catch (error) {
       return { ok: false, error: '도네이션 섹션을 만들 수 없습니다.' };
     }
+  }
+
+  @Query(() => AllDonateOutput)
+  allDonate(): Promise<AllDonateOutput> {
+      return this.donateSessionService.allDonate();
   }
 }

@@ -18,4 +18,12 @@ export class ProvideImage extends CoreEntity {
   @Column()
   @Field(() => String)
   token: string;
+
+  @Column()
+  @Field(() => String)
+  donateSessionTitle: string;
+
+  @Column()
+  @Field(() => String)
+  donateDurationDate: string
 }

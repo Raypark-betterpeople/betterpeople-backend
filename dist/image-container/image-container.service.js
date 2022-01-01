@@ -26,10 +26,13 @@ let ImageContainerService = class ImageContainerService {
     async createImage({ imageUrl, donateId }) {
         try {
             const donate = await this.donates.findOne({ id: donateId });
-            const newImage = await this.images.create({ imageUrl: imageUrl });
-            newImage.donate = donate;
-            await this.images.save(newImage);
-            return { ok: true };
+            if (donate) {
+                const newImage = await this.images.create({ imageUrl: imageUrl });
+                newImage.donate = donate;
+                await this.images.save(newImage);
+                return { ok: true };
+            }
+            return { ok: false, error: "존재하지 않는 기부 세션입니다." };
         }
         catch (error) {
             return { ok: false, error };

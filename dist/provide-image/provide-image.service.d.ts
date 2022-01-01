@@ -16,4 +16,5 @@ export declare class ProvideImageService {
         error?: string;
     }>;
     findByToken(token: string): Promise<ProvideImage>;
+    myImages(user: User): Promise<void>;
 }

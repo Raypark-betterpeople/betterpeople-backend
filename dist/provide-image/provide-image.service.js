@@ -34,12 +34,16 @@ let ProvideImageService = class ProvideImageService {
             const donateImages = await this.images.find({ donate: donateSession });
             let randNum = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
             const imageURL = await donateImages[randNum].imageUrl;
+            const donationTitle = await donateSession.title;
+            const donateDurationTime = await donateSession.durationTime;
             const VerifyToken = await this.jwtService.signToken({
                 check: 'copyright of the better people Inc.',
             });
             const newProvideImage = this.provideImage.create({
                 token: VerifyToken,
                 imageUrl: imageURL,
+                donateSessionTitle: donationTitle,
+                donateDurationDate: donateDurationTime,
             });
             newProvideImage.providingUser = providingUser;
             await this.provideImage.save(newProvideImage);
@@ -51,6 +55,9 @@ let ProvideImageService = class ProvideImageService {
     }
     async findByToken(token) {
         return this.provideImage.findOne({ token }, { relations: ['providingUser'] });
+    }
+    async myImages(user) {
+        console.log(user);
     }
 };
 ProvideImageService = __decorate([

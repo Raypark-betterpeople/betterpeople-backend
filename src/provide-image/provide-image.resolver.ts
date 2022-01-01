@@ -3,6 +3,7 @@ import { Args, Context, Mutation, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateProvideImageInput, CreateProvideImageOutput } from './dtos/create-provide-image.dto';
+import { MyImagesOutput } from './dtos/myImages.dto';
 import {
   VerifyImageSearchInput,
   VerifyImageSearchOutput,

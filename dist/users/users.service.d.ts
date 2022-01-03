@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { CreateAccountInput } from './dtos/create-account.dto';
+import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from 'src/jwt/jwt.service';
@@ -13,10 +13,7 @@ export declare class UsersService {
     private readonly jwtService;
     private readonly mailService;
     constructor(users: Repository<User>, verifications: Repository<Verification>, jwtService: JwtService, mailService: MailService);
-    createAccount({ email, password, nickname, profileImg, }: CreateAccountInput): Promise<{
-        ok: boolean;
-        error?: string;
-    }>;
+    createAccount({ email, password, nickname, profileImg, }: CreateAccountInput): Promise<CreateAccountOutput>;
     login({ email, password, }: LoginInput): Promise<{
         ok: boolean;
         error?: string;

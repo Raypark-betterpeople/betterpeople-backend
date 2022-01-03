@@ -25,6 +25,8 @@ const verification_entity_1 = require("./users/entities/verification.entity");
 const mail_module_1 = require("./mail/mail.module");
 const donate_session_module_1 = require("./donate-session/donate-session.module");
 const donate_session_entity_1 = require("./donate-session/entities/donate-session.entity");
+const notice_module_1 = require("./notice/notice.module");
+const notice_entity_1 = require("./notice/entities/notice.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(jwt_middleware_1.JwtMiddleWare).forRoutes({
@@ -54,7 +56,7 @@ AppModule = __decorate([
                 database: process.env.DB_NAME,
                 synchronize: process.env.NODE_ENV !== 'prod',
                 logging: process.env.NODE_ENV !== 'prod',
-                entities: [user_entity_1.User, image_container_1.ImageContainer, provide_image_entity_1.ProvideImage, verification_entity_1.Verification, donate_session_entity_1.DonateSession],
+                entities: [user_entity_1.User, image_container_1.ImageContainer, provide_image_entity_1.ProvideImage, verification_entity_1.Verification, donate_session_entity_1.DonateSession, notice_entity_1.Notice],
             }),
             jwt_module_1.JwtModule.forRoot({
                 privateKey: process.env.TOKEN_SECRET,
@@ -71,6 +73,7 @@ AppModule = __decorate([
             provide_image_module_1.ProvideImageModule,
             mail_module_1.MailModule,
             donate_session_module_1.DonateSessionModule,
+            notice_module_1.NoticeModule,
         ],
         controllers: [],
         providers: [],

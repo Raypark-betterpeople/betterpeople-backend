@@ -40,10 +40,11 @@ AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
-                envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
-                ignoreEnvFile: process.env.NODE_ENV === 'prod',
+                envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.production',
+                ignoreEnvFile: process.env.NODE_ENV === 'production',
             }),
             graphql_1.GraphQLModule.forRoot({
+                playground: process.env.NODE_ENV !== 'production',
                 autoSchemaFile: true,
                 context: ({ req }) => ({ user: req['user'] }),
             }),
@@ -54,8 +55,8 @@ AppModule = __decorate([
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
-                synchronize: process.env.NODE_ENV !== 'prod',
-                logging: process.env.NODE_ENV !== 'prod',
+                synchronize: process.env.NODE_ENV !== 'production',
+                logging: process.env.NODE_ENV !== 'production',
                 entities: [user_entity_1.User, image_container_1.ImageContainer, provide_image_entity_1.ProvideImage, verification_entity_1.Verification, donate_session_entity_1.DonateSession, notice_entity_1.Notice],
             }),
             jwt_module_1.JwtModule.forRoot({

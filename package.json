@@ -1,8 +1,8 @@
 {
   "name": "better-man-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "더 좋은 사람들 server",
+  "author": "betterpeople inc.",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

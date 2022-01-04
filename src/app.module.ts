@@ -28,10 +28,11 @@ import { Notice } from './notice/entities/notice.entity';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
-      ignoreEnvFile: process.env.NODE_ENV === 'prod',
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.production',
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
     }),
     GraphQLModule.forRoot({
+      playground: process.env.NODE_ENV !== 'production',
       autoSchemaFile: true,
       context: ({ req }) => ({ user: req['user'] }),
     }),
@@ -42,8 +43,8 @@ import { Notice } from './notice/entities/notice.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      synchronize: process.env.NODE_ENV !== 'prod',
-      logging: process.env.NODE_ENV !== 'prod',
+      synchronize: process.env.NODE_ENV !== 'production',
+      logging: process.env.NODE_ENV !== 'production',
       entities: [User, ImageContainer, ProvideImage, Verification, DonateSession, Notice],
     }),
     JwtModule.forRoot({

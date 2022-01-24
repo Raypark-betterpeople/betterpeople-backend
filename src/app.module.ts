@@ -23,6 +23,7 @@ import { DonateSessionModule } from './donate-session/donate-session.module';
 import { DonateSession } from './donate-session/entities/donate-session.entity';
 import { NoticeModule } from './notice/notice.module';
 import { Notice } from './notice/entities/notice.entity';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { Notice } from './notice/entities/notice.entity';
     MailModule,
     DonateSessionModule,
     NoticeModule,
+    UploadsModule,
   ],
   controllers: [],
   providers: [],

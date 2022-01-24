@@ -27,6 +27,7 @@ const donate_session_module_1 = require("./donate-session/donate-session.module"
 const donate_session_entity_1 = require("./donate-session/entities/donate-session.entity");
 const notice_module_1 = require("./notice/notice.module");
 const notice_entity_1 = require("./notice/entities/notice.entity");
+const uploads_module_1 = require("./uploads/uploads.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(jwt_middleware_1.JwtMiddleWare).forRoutes({
@@ -75,6 +76,7 @@ AppModule = __decorate([
             mail_module_1.MailModule,
             donate_session_module_1.DonateSessionModule,
             notice_module_1.NoticeModule,
+            uploads_module_1.UploadsModule,
         ],
         controllers: [],
         providers: [],

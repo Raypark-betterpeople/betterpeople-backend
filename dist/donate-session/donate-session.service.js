@@ -48,6 +48,29 @@ let DonateSessionService = class DonateSessionService {
             };
         }
     }
+    async findDonateById({ donateId }) {
+        try {
+            const donate = await this.donations.findOne(donateId, {
+                relations: ['donateImage']
+            });
+            if (!donate) {
+                return {
+                    ok: false,
+                    error: '찾을 수 없는 기부 세션입니다.'
+                };
+            }
+            return {
+                ok: true,
+                donate,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: "찾을 수 없습니다."
+            };
+        }
+    }
 };
 DonateSessionService = __decorate([
     (0, common_1.Injectable)(),

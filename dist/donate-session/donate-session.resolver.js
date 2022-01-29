@@ -17,6 +17,7 @@ const graphql_1 = require("@nestjs/graphql");
 const donate_session_service_1 = require("./donate-session.service");
 const all_donate_dto_1 = require("./dtos/all-donate.dto");
 const create_donate_dto_1 = require("./dtos/create-donate.dto");
+const donate_dto_1 = require("./dtos/donate.dto");
 const donate_session_entity_1 = require("./entities/donate-session.entity");
 let DonateSessionResolver = class DonateSessionResolver {
     constructor(donateSessionService) {
@@ -40,6 +41,9 @@ let DonateSessionResolver = class DonateSessionResolver {
     allDonate() {
         return this.donateSessionService.allDonate();
     }
+    donate(donateInput) {
+        return this.donateSessionService.findDonateById(donateInput);
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => create_donate_dto_1.CreateDonateOutput),
@@ -54,6 +58,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DonateSessionResolver.prototype, "allDonate", null);
+__decorate([
+    (0, graphql_1.Query)(() => donate_dto_1.DonateOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [donate_dto_1.DonateInput]),
+    __metadata("design:returntype", Promise)
+], DonateSessionResolver.prototype, "donate", null);
 DonateSessionResolver = __decorate([
     (0, graphql_1.Resolver)(() => donate_session_entity_1.DonateSession),
     __metadata("design:paramtypes", [donate_session_service_1.DonateSessionService])

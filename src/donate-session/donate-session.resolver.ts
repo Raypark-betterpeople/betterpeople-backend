@@ -5,6 +5,7 @@ import {
   CreateDonateInput,
   CreateDonateOutput,
 } from './dtos/create-donate.dto';
+import { DonateInput, DonateOutput } from './dtos/donate.dto';
 import { DonateSession } from './entities/donate-session.entity';
 
 @Resolver(() => DonateSession)
@@ -33,5 +34,10 @@ export class DonateSessionResolver {
   @Query(() => AllDonateOutput)
   allDonate(): Promise<AllDonateOutput> {
       return this.donateSessionService.allDonate();
+  }
+
+  @Query(() => DonateOutput)
+  donate(@Args('input') donateInput: DonateInput): Promise<DonateOutput> {
+    return this.donateSessionService.findDonateById(donateInput);
   }
 }

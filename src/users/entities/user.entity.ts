@@ -33,6 +33,10 @@ export class User extends CoreEntity {
   @Field(() => Boolean)
   emailVerified: boolean;
 
+  @Column({default: false})
+  @Field(() => Boolean)
+  adminUser?: boolean;
+
   @Field((type) => [ProvideImage], { nullable: true })
   @OneToMany(
     (type) => ProvideImage,

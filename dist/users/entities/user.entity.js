@@ -69,6 +69,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "emailVerified", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    (0, graphql_1.Field)(() => Boolean),
+    __metadata("design:type", Boolean)
+], User.prototype, "adminUser", void 0);
+__decorate([
     (0, graphql_1.Field)((type) => [provide_image_entity_1.ProvideImage], { nullable: true }),
     (0, typeorm_1.OneToMany)((type) => provide_image_entity_1.ProvideImage, (provideImage) => provideImage.providingUser, { eager: true }),
     __metadata("design:type", Array)

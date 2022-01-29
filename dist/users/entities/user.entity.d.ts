@@ -6,6 +6,7 @@ export declare class User extends CoreEntity {
     password: string;
     profileImg?: string;
     emailVerified: boolean;
+    adminUser?: boolean;
     provideImage?: ProvideImage[];
     hashPassword(): Promise<void>;
     checkPassword(notSaltPassword: string): Promise<boolean>;

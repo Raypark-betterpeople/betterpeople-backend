@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AllNoticeOutput } from './dtos/all-notice.dto';
 import {
   CreateNoticeInput,
   CreateNoticeOutput,
@@ -31,6 +32,20 @@ export class NoticeService {
         ok: false,
         error,
       };
+    }
+  }
+  async allNotice(): Promise<AllNoticeOutput> {
+    try {
+      const notices = await this.notices.find();
+      return {
+        notices,
+        ok: true,
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        error
+      }
     }
   }
 }

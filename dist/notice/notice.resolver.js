@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NoticeResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const all_notice_dto_1 = require("./dtos/all-notice.dto");
 const create_notice_dto_1 = require("./dtos/create-notice.dto");
 const notice_entity_1 = require("./entities/notice.entity");
 const notice_service_1 = require("./notice.service");
@@ -44,6 +45,9 @@ let NoticeResolver = class NoticeResolver {
             };
         }
     }
+    allNotice() {
+        return this.noticeService.allNotice();
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => create_notice_dto_1.CreateNoticeOutput),
@@ -52,6 +56,12 @@ __decorate([
     __metadata("design:paramtypes", [create_notice_dto_1.CreateNoticeInput]),
     __metadata("design:returntype", Promise)
 ], NoticeResolver.prototype, "createNotice", null);
+__decorate([
+    (0, graphql_1.Query)(() => all_notice_dto_1.AllNoticeOutput),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], NoticeResolver.prototype, "allNotice", null);
 NoticeResolver = __decorate([
     (0, graphql_1.Resolver)(() => notice_entity_1.Notice),
     __metadata("design:paramtypes", [notice_service_1.NoticeService])

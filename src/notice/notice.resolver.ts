@@ -1,4 +1,5 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AllNoticeOutput } from './dtos/all-notice.dto';
 import {
   CreateNoticeInput,
   CreateNoticeOutput,
@@ -35,4 +36,9 @@ export class NoticeResolver {
           }
       }
   }
+  @Query(() => AllNoticeOutput)
+  allNotice(): Promise<AllNoticeOutput> {
+      return this.noticeService.allNotice();
+  }
 }
+

@@ -35,6 +35,21 @@ let NoticeService = class NoticeService {
             };
         }
     }
+    async allNotice() {
+        try {
+            const notices = await this.notices.find();
+            return {
+                notices,
+                ok: true,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error
+            };
+        }
+    }
 };
 NoticeService = __decorate([
     (0, common_1.Injectable)(),

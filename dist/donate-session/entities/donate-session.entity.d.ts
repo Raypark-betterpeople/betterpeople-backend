@@ -4,6 +4,7 @@ export declare class DonateSession extends CoreEntity {
     title: string;
     description: string;
     coverImg?: string;
+    descriptionImg?: string;
     durationTime: string;
     donateImage?: ImageContainer[];
 }

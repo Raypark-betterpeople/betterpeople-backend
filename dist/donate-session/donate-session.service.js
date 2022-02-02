@@ -21,9 +21,9 @@ let DonateSessionService = class DonateSessionService {
     constructor(donations) {
         this.donations = donations;
     }
-    async createDonate({ title, description, coverImg, durationTime }) {
+    async createDonate({ title, description, coverImg, durationTime, descriptionImg, }) {
         try {
-            await this.donations.save(this.donations.create({ title, description, coverImg, durationTime }));
+            await this.donations.save(this.donations.create({ title, description, coverImg, durationTime, descriptionImg }));
             return { ok: true };
         }
         catch (error) {

@@ -56,8 +56,16 @@ let ProvideImageService = class ProvideImageService {
     async findByToken(token) {
         return this.provideImage.findOne({ token }, { relations: ['providingUser'] });
     }
-    async myImages(user) {
-        console.log(user);
+    async myImages(providingUser) {
+        try {
+            this.provideImage.findOne(providingUser);
+            return { ok: true };
+        }
+        catch (error) {
+            return {
+                ok: false, error
+            };
+        }
     }
 };
 ProvideImageService = __decorate([

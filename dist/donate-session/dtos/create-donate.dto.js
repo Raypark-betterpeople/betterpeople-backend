@@ -10,7 +10,7 @@ exports.CreateDonateOutput = exports.CreateDonateInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const output_dto_1 = require("../../common/dtos/output.dto");
 const donate_session_entity_1 = require("../entities/donate-session.entity");
-let CreateDonateInput = class CreateDonateInput extends (0, graphql_1.PickType)(donate_session_entity_1.DonateSession, ['title', 'description', 'coverImg', 'durationTime']) {
+let CreateDonateInput = class CreateDonateInput extends (0, graphql_1.PickType)(donate_session_entity_1.DonateSession, ['title', 'description', 'coverImg', 'durationTime', 'descriptionImg']) {
 };
 CreateDonateInput = __decorate([
     (0, graphql_1.InputType)()

@@ -37,7 +37,11 @@ let NoticeService = class NoticeService {
     }
     async allNotice() {
         try {
-            const notices = await this.notices.find();
+            const notices = await this.notices.find({
+                order: {
+                    createAt: 'DESC'
+                }
+            });
             return {
                 notices,
                 ok: true,

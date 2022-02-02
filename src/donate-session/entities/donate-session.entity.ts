@@ -14,10 +14,14 @@ export class DonateSession extends CoreEntity {
     @Column()
     @Field(() => String)
     description: string
-    
+
     @Column()
     @Field(() => String)
     coverImg?: string;
+
+    @Column()
+    @Field(() => String)
+    descriptionImg?: string;
 
     @Column()
     @Field(() => String)

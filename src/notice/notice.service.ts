@@ -36,7 +36,11 @@ export class NoticeService {
   }
   async allNotice(): Promise<AllNoticeOutput> {
     try {
-      const notices = await this.notices.find();
+      const notices = await this.notices.find({
+        order: {
+          createAt: 'DESC'
+        }
+      });
       return {
         notices,
         ok: true,

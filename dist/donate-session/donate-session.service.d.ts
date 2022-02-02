@@ -6,7 +6,7 @@ import { DonateSession } from './entities/donate-session.entity';
 export declare class DonateSessionService {
     private readonly donations;
     constructor(donations: Repository<DonateSession>);
-    createDonate({ title, description, coverImg, durationTime }: CreateDonateInput): Promise<{
+    createDonate({ title, description, coverImg, durationTime, descriptionImg, }: CreateDonateInput): Promise<{
         ok: boolean;
         error?: string;
     }>;

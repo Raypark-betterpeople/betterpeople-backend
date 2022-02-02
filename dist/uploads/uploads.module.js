@@ -13,7 +13,7 @@ let UploadsModule = class UploadsModule {
 };
 UploadsModule = __decorate([
     (0, common_1.Module)({
-        controllers: [uploads_controller_1.UploadsController]
+        controllers: [uploads_controller_1.UploadsController, uploads_controller_1.UploadsController2]
     })
 ], UploadsModule);
 exports.UploadsModule = UploadsModule;

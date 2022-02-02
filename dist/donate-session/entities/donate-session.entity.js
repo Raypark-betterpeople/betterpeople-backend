@@ -35,6 +35,11 @@ __decorate([
     (0, typeorm_1.Column)(),
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
+], DonateSession.prototype, "descriptionImg", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
 ], DonateSession.prototype, "durationTime", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [image_container_1.ImageContainer], { nullable: true }),

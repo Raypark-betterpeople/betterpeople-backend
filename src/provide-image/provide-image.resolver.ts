@@ -2,7 +2,10 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { CreateProvideImageInput, CreateProvideImageOutput } from './dtos/create-provide-image.dto';
+import {
+  CreateProvideImageInput,
+  CreateProvideImageOutput,
+} from './dtos/create-provide-image.dto';
 import { MyImagesOutput } from './dtos/myImages.dto';
 import {
   VerifyImageSearchInput,
@@ -49,16 +52,36 @@ export class ProvideImageResolver {
     @Args('input') verifyImageSearchInput: VerifyImageSearchInput,
   ): Promise<VerifyImageSearchOutput> {
     try {
-      const verifyImage = await this.provideImageService.findByToken(verifyImageSearchInput.token)
+      const verifyImage = await this.provideImageService.findByToken(
+        verifyImageSearchInput.token,
+      );
       return {
         ok: true,
-        verifyImage
+        verifyImage,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: '인증된 이미지를 찾을 수 없습니다.',
+      };
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Query(() => MyImagesOutput)
+  async myImages(@Context() context) {
+    try {
+      const user = context.user;
+      const myImages = await this.provideImageService.myImages(user);
+      return {
+        ok: true,
+        myImages,
       }
     } catch (error) {
       return {
         ok: false,
-        error: "인증된 이미지를 찾을 수 없습니다."
-      }
+        error: '일러스트를 불러올 수 없습니다.',
+      };
     }
   }
 }

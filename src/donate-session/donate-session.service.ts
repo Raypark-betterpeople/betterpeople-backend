@@ -18,11 +18,12 @@ export class DonateSessionService {
     title,
     description,
     coverImg,
-    durationTime
+    durationTime,
+    descriptionImg,
   }: CreateDonateInput): Promise<{ ok: boolean; error?: string }> {
     try {
       await this.donations.save(
-        this.donations.create({title, description, coverImg, durationTime})
+        this.donations.create({title, description, coverImg, durationTime, descriptionImg})
       )
       return {ok: true}
     } catch (error) {

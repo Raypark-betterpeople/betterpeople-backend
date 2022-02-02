@@ -3,3 +3,8 @@ export declare class UploadsController {
         url: string;
     }>;
 }
+export declare class UploadsController2 {
+    uploadFile(file: any): Promise<{
+        url2: string;
+    }>;
+}

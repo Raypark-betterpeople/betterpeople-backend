@@ -18,6 +18,7 @@ const graphql_1 = require("@nestjs/graphql");
 const graphql_2 = require("@nestjs/graphql");
 const auth_guard_1 = require("../auth/auth.guard");
 const create_provide_image_dto_1 = require("./dtos/create-provide-image.dto");
+const myImages_dto_1 = require("./dtos/myImages.dto");
 const verify_image_search_dto_1 = require("./dtos/verify-image-search.dto");
 const provide_image_entity_1 = require("./entities/provide-image.entity");
 const provide_image_service_1 = require("./provide-image.service");
@@ -48,13 +49,29 @@ let ProvideImageResolver = class ProvideImageResolver {
             const verifyImage = await this.provideImageService.findByToken(verifyImageSearchInput.token);
             return {
                 ok: true,
-                verifyImage
+                verifyImage,
             };
         }
         catch (error) {
             return {
                 ok: false,
-                error: "인증된 이미지를 찾을 수 없습니다."
+                error: '인증된 이미지를 찾을 수 없습니다.',
+            };
+        }
+    }
+    async myImages(context) {
+        try {
+            const user = context.user;
+            const myImages = await this.provideImageService.myImages(user);
+            return {
+                ok: true,
+                myImages,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: '일러스트를 불러올 수 없습니다.',
             };
         }
     }
@@ -76,6 +93,14 @@ __decorate([
     __metadata("design:paramtypes", [verify_image_search_dto_1.VerifyImageSearchInput]),
     __metadata("design:returntype", Promise)
 ], ProvideImageResolver.prototype, "searchVerifyImage", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, graphql_1.Query)(() => myImages_dto_1.MyImagesOutput),
+    __param(0, (0, graphql_1.Context)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProvideImageResolver.prototype, "myImages", null);
 ProvideImageResolver = __decorate([
     (0, graphql_2.Resolver)(() => provide_image_entity_1.ProvideImage),
     __metadata("design:paramtypes", [provide_image_service_1.ProvideImageService])

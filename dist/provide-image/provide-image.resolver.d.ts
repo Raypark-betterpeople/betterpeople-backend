@@ -6,4 +6,16 @@ export declare class ProvideImageResolver {
     constructor(provideImageService: ProvideImageService);
     createProvideImage(createProvideImageInput: CreateProvideImageInput, context: any): Promise<CreateProvideImageOutput>;
     searchVerifyImage(verifyImageSearchInput: VerifyImageSearchInput): Promise<VerifyImageSearchOutput>;
+    myImages(context: any): Promise<{
+        ok: boolean;
+        myImages: {
+            ok: boolean;
+            error?: string;
+        };
+        error?: undefined;
+    } | {
+        ok: boolean;
+        error: string;
+        myImages?: undefined;
+    }>;
 }

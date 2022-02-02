@@ -51,7 +51,14 @@ export class ProvideImageService {
     return this.provideImage.findOne({token}, {relations: ['providingUser']});
   }
 
-  async myImages(user: User) {
-    console.log(user)
+  async myImages(providingUser: User):Promise<{ok:boolean; error?: string}> {
+    try {
+      this.provideImage.findOne(providingUser)
+      return {ok: true}
+    } catch (error) {
+      return {
+        ok: false, error
+      }
+    }
   }
 }

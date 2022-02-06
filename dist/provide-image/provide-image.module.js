@@ -14,10 +14,12 @@ const image_container_1 = require("../image-container/entities/image-container")
 const provide_image_entity_1 = require("./entities/provide-image.entity");
 const provide_image_resolver_1 = require("./provide-image.resolver");
 const provide_image_service_1 = require("./provide-image.service");
+const providing_image_controller_1 = require("./providing-image.controller");
 let ProvideImageModule = class ProvideImageModule {
 };
 ProvideImageModule = __decorate([
     (0, common_1.Module)({
+        controllers: [providing_image_controller_1.PaymentsController],
         imports: [typeorm_1.TypeOrmModule.forFeature([provide_image_entity_1.ProvideImage, donate_session_entity_1.DonateSession, image_container_1.ImageContainer])],
         providers: [
             provide_image_resolver_1.ProvideImageResolver,

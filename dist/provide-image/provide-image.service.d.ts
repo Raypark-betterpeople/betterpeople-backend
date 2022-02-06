@@ -11,7 +11,7 @@ export declare class ProvideImageService {
     private readonly images;
     private readonly jwtService;
     constructor(provideImage: Repository<ProvideImage>, donates: Repository<DonateSession>, images: Repository<ImageContainer>, jwtService: JwtService);
-    createProvideImage(providingUser: User, { donateId }: CreateProvideImageInput): Promise<{
+    createProvideImage(providingUser: User, { donateId, transactionId }: CreateProvideImageInput): Promise<{
         ok: boolean;
         error?: string;
     }>;

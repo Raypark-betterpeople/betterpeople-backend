@@ -7,6 +7,9 @@ import { ProvideImage } from "../entities/provide-image.entity";
 export class CreateProvideImageInput {
     @Field(() => Number)
     donateId: number
+
+    @Field(() => String)
+    transactionId: string
 }
 
 

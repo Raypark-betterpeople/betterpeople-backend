@@ -41,6 +41,11 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], ProvideImage.prototype, "donateDurationDate", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], ProvideImage.prototype, "transactionId", void 0);
 ProvideImage = __decorate([
     (0, graphql_1.InputType)('ProvideImageInputType', { isAbstract: true }),
     (0, graphql_1.ObjectType)(),

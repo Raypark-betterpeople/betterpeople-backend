@@ -26,4 +26,8 @@ export class ProvideImage extends CoreEntity {
   @Column()
   @Field(() => String)
   donateDurationDate: string
+
+  @Column()
+  @Field(() => String)
+  transactionId: string;
 }

@@ -28,7 +28,7 @@ let ProvideImageService = class ProvideImageService {
         this.images = images;
         this.jwtService = jwtService;
     }
-    async createProvideImage(providingUser, { donateId }) {
+    async createProvideImage(providingUser, { donateId, transactionId }) {
         try {
             const donateSession = await this.donates.findOne({ id: donateId });
             const donateImages = await this.images.find({ donate: donateSession });
@@ -44,6 +44,7 @@ let ProvideImageService = class ProvideImageService {
                 imageUrl: imageURL,
                 donateSessionTitle: donationTitle,
                 donateDurationDate: donateDurationTime,
+                transactionId,
             });
             newProvideImage.providingUser = providingUser;
             await this.provideImage.save(newProvideImage);

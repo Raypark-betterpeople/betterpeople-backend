@@ -21,7 +21,7 @@ export class ProvideImageService {
   ) {}
   async createProvideImage(
     providingUser: User,
-    { donateId }: CreateProvideImageInput
+    { donateId, transactionId }: CreateProvideImageInput
   ): Promise<{ ok: boolean; error?: string }> {
     try {
       const donateSession:DonateSession = await this.donates.findOne({id: donateId})
@@ -38,6 +38,7 @@ export class ProvideImageService {
         imageUrl: imageURL,
         donateSessionTitle: donationTitle,
         donateDurationDate: donateDurationTime,
+        transactionId,
       });
       newProvideImage.providingUser = providingUser
       await this.provideImage.save(newProvideImage);

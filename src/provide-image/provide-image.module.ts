@@ -5,8 +5,10 @@ import { ImageContainer } from 'src/image-container/entities/image-container';
 import { ProvideImage } from './entities/provide-image.entity';
 import { ProvideImageResolver } from './provide-image.resolver';
 import { ProvideImageService } from './provide-image.service';
+import { PaymentsController } from './providing-image.controller';
 
 @Module({
+  controllers: [PaymentsController],
   imports: [TypeOrmModule.forFeature([ProvideImage,DonateSession,ImageContainer])],
   providers: [
     ProvideImageResolver,

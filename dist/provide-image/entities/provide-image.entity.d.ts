@@ -6,4 +6,5 @@ export declare class ProvideImage extends CoreEntity {
     token: string;
     donateSessionTitle: string;
     donateDurationDate: string;
+    transactionId: string;
 }

@@ -18,6 +18,10 @@ __decorate([
     (0, graphql_1.Field)(() => Number),
     __metadata("design:type", Number)
 ], CreateProvideImageInput.prototype, "donateId", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], CreateProvideImageInput.prototype, "transactionId", void 0);
 CreateProvideImageInput = __decorate([
     (0, graphql_1.ArgsType)(),
     (0, graphql_1.InputType)()

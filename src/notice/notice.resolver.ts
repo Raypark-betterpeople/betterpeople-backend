@@ -4,6 +4,7 @@ import {
   CreateNoticeInput,
   CreateNoticeOutput,
 } from './dtos/create-notice.dto';
+import { NoticeInput, NoticeOutput } from './dtos/notice.dto';
 import { Notice } from './entities/notice.entity';
 import { NoticeService } from './notice.service';
 
@@ -39,6 +40,11 @@ export class NoticeResolver {
   @Query(() => AllNoticeOutput)
   allNotice(): Promise<AllNoticeOutput> {
       return this.noticeService.allNotice();
+  }
+
+  @Query(() => NoticeOutput)
+  notice(@Args('input') noticeInput: NoticeInput): Promise<NoticeOutput> {
+    return this.noticeService.findNoticeById(noticeInput);
   }
 }
 

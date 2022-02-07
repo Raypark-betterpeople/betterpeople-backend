@@ -32,7 +32,7 @@ let ProvideImageService = class ProvideImageService {
         try {
             const donateSession = await this.donates.findOne({ id: donateId });
             const donateImages = await this.images.find({ donate: donateSession });
-            let randNum = Math.floor(Math.random() * (7 - 1 + 1)) + 1;
+            let randNum = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
             const imageURL = await donateImages[randNum].imageUrl;
             const donationTitle = await donateSession.title;
             const donateDurationTime = await donateSession.durationTime;

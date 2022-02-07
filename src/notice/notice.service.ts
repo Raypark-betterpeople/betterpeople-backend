@@ -6,6 +6,7 @@ import {
   CreateNoticeInput,
   CreateNoticeOutput,
 } from './dtos/create-notice.dto';
+import { NoticeInput, NoticeOutput } from './dtos/notice.dto';
 import { Notice } from './entities/notice.entity';
 
 @Injectable()
@@ -49,6 +50,26 @@ export class NoticeService {
       return {
         ok: false,
         error
+      }
+    }
+  }
+  async findNoticeById({noticeId} : NoticeInput): Promise<NoticeOutput> {
+    try {
+      const notice = await this.notices.findOne(noticeId)
+      if (!notice) {
+        return {
+          ok: false,
+          error: '찾을 수 없는 공지사항입니다.'
+        }
+      }
+      return {
+        ok: true,
+        notice,
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        error: "찾을 수 없습니다."
       }
     }
   }

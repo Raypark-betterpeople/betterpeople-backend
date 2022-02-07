@@ -54,6 +54,27 @@ let NoticeService = class NoticeService {
             };
         }
     }
+    async findNoticeById({ noticeId }) {
+        try {
+            const notice = await this.notices.findOne(noticeId);
+            if (!notice) {
+                return {
+                    ok: false,
+                    error: '찾을 수 없는 공지사항입니다.'
+                };
+            }
+            return {
+                ok: true,
+                notice,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: "찾을 수 없습니다."
+            };
+        }
+    }
 };
 NoticeService = __decorate([
     (0, common_1.Injectable)(),

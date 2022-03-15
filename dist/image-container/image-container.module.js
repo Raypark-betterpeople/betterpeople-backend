@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageContainerModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const donate_session_entity_1 = require("../donate-session/entities/donate-session.entity");
 const image_container_1 = require("./entities/image-container");
 const image_container_resolver_1 = require("./image-container.resolver");
 const image_container_service_1 = require("./image-container.service");
@@ -16,7 +17,7 @@ let ImageContainerModule = class ImageContainerModule {
 };
 ImageContainerModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([image_container_1.ImageContainer])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([image_container_1.ImageContainer, donate_session_entity_1.DonateSession])],
         providers: [image_container_resolver_1.ImageContainerResolver, image_container_service_1.ImageContainerService]
     })
 ], ImageContainerModule);

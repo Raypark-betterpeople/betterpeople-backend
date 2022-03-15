@@ -8,6 +8,7 @@ import {
 import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dtos/user-profile.dto';
+import { VerifyEmailInput, VerifyEmailOutput } from './dtos/verify-email.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
@@ -78,6 +79,7 @@ export class UserResolver {
     } else {
       try {
         const user = await this.userService.findById(userProfileInput.userId);
+        console.log(user);
         if (!user) {
           throw Error;
         }
@@ -108,7 +110,7 @@ export class UserResolver {
         await this.userService.editProfile(user['id'], editProfileInput);
         return {
           ok: true,
-        }
+        };
       } catch (error) {
         return {
           ok: false,
@@ -116,5 +118,12 @@ export class UserResolver {
         };
       }
     }
+  }
+
+  @Mutation(() => VerifyEmailOutput)
+  verifyEmail(
+    @Args('input') verifyEmailInput: VerifyEmailInput,
+  ): Promise<VerifyEmailOutput> {
+    return this.userService.verifyEmail(verifyEmailInput.code);
   }
 }

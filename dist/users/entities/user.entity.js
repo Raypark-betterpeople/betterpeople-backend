@@ -19,12 +19,14 @@ const class_validator_1 = require("class-validator");
 const provide_image_entity_1 = require("../../provide-image/entities/provide-image.entity");
 let User = class User extends core_entity_1.CoreEntity {
     async hashPassword() {
-        try {
-            this.password = await bcrypt.hash(this.password, 10);
-        }
-        catch (error) {
-            console.log(error);
-            throw new common_1.InternalServerErrorException();
+        if (this.password) {
+            try {
+                this.password = await bcrypt.hash(this.password, 10);
+            }
+            catch (error) {
+                console.log(error);
+                throw new common_1.InternalServerErrorException();
+            }
         }
     }
     async checkPassword(notSaltPassword) {
@@ -51,9 +53,8 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ select: false }),
     (0, graphql_1.Field)(() => String),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
@@ -63,12 +64,23 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "profileImg", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => provide_image_entity_1.ProvideImage, { nullable: true }),
-    (0, typeorm_1.OneToMany)((type) => provide_image_entity_1.ProvideImage, (provideImage) => provideImage.providingUser),
+    (0, typeorm_1.Column)({ default: false }),
+    (0, graphql_1.Field)(() => Boolean),
+    __metadata("design:type", Boolean)
+], User.prototype, "emailVerified", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    (0, graphql_1.Field)(() => Boolean),
+    __metadata("design:type", Boolean)
+], User.prototype, "adminUser", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [provide_image_entity_1.ProvideImage], { nullable: true }),
+    (0, typeorm_1.OneToMany)((type) => provide_image_entity_1.ProvideImage, (provideImage) => provideImage.providingUser, { eager: true }),
     __metadata("design:type", Array)
 ], User.prototype, "provideImage", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),
+    (0, typeorm_1.BeforeUpdate)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

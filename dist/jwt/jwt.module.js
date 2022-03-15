@@ -9,7 +9,7 @@ var JwtModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtModule = void 0;
 const common_1 = require("@nestjs/common");
-const jwt_constant_1 = require("./jwt-constant");
+const common_constant_1 = require("../common/common.constant");
 const jwt_service_1 = require("./jwt.service");
 let JwtModule = JwtModule_1 = class JwtModule {
     static forRoot(options) {
@@ -17,7 +17,7 @@ let JwtModule = JwtModule_1 = class JwtModule {
             module: JwtModule_1,
             providers: [
                 {
-                    provide: jwt_constant_1.CONFIG_OPTIONS,
+                    provide: common_constant_1.CONFIG_OPTIONS,
                     useValue: options,
                 },
                 jwt_service_1.JwtService,

@@ -20,6 +20,7 @@ const create_account_dto_1 = require("./dtos/create-account.dto");
 const edit_profile_dto_1 = require("./dtos/edit-profile.dto");
 const login_dto_1 = require("./dtos/login.dto");
 const user_profile_dto_1 = require("./dtos/user-profile.dto");
+const verify_email_dto_1 = require("./dtos/verify-email.dto");
 const user_entity_1 = require("./entities/user.entity");
 const users_service_1 = require("./users.service");
 let UserResolver = class UserResolver {
@@ -77,6 +78,7 @@ let UserResolver = class UserResolver {
         else {
             try {
                 const user = await this.userService.findById(userProfileInput.userId);
+                console.log(user);
                 if (!user) {
                     throw Error;
                 }
@@ -112,6 +114,9 @@ let UserResolver = class UserResolver {
                 };
             }
         }
+    }
+    verifyEmail(verifyEmailInput) {
+        return this.userService.verifyEmail(verifyEmailInput.code);
     }
 };
 __decorate([
@@ -154,6 +159,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, edit_profile_dto_1.EditProfileInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "editProfile", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => verify_email_dto_1.VerifyEmailOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [verify_email_dto_1.VerifyEmailInput]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "verifyEmail", null);
 UserResolver = __decorate([
     (0, graphql_1.Resolver)(() => user_entity_1.User),
     __metadata("design:paramtypes", [users_service_1.UsersService])

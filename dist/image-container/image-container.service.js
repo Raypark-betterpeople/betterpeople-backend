@@ -15,33 +15,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageContainerService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const donate_session_entity_1 = require("../donate-session/entities/donate-session.entity");
 const typeorm_2 = require("typeorm");
 const image_container_1 = require("./entities/image-container");
 let ImageContainerService = class ImageContainerService {
-    constructor(images) {
+    constructor(images, donates) {
         this.images = images;
+        this.donates = donates;
     }
-    async createImage({ diceNumber, imageUrl, }) {
+    async createImage({ imageUrl, donateId }) {
         try {
-            const existDiceNumber = await this.images.findOne({ diceNumber });
-            if (existDiceNumber) {
-                return {
-                    ok: false,
-                    error: '이미 같은 다이스넘버의 이미지가 존재합니다.',
-                };
+            const donate = await this.donates.findOne({ id: donateId });
+            if (donate) {
+                const newImage = await this.images.create({ imageUrl: imageUrl });
+                newImage.donate = donate;
+                await this.images.save(newImage);
+                return { ok: true };
             }
-            await this.images.save(this.images.create({ diceNumber, imageUrl }));
-            return { ok: true };
+            return { ok: false, error: "존재하지 않는 기부 세션입니다." };
         }
         catch (error) {
-            return { ok: false, error: '이미지를 저장할 수 없습니다.' };
+            return { ok: false, error };
         }
     }
 };
 ImageContainerService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(image_container_1.ImageContainer)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(donate_session_entity_1.DonateSession)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ImageContainerService);
 exports.ImageContainerService = ImageContainerService;
 //# sourceMappingURL=image-container.service.js.map

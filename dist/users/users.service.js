@@ -18,10 +18,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const jwt_service_1 = require("../jwt/jwt.service");
+const verification_entity_1 = require("./entities/verification.entity");
+const mail_service_1 = require("../mail/mail.service");
 let UsersService = class UsersService {
-    constructor(users, jwtService) {
+    constructor(users, verifications, jwtService, mailService) {
         this.users = users;
+        this.verifications = verifications;
         this.jwtService = jwtService;
+        this.mailService = mailService;
     }
     async createAccount({ email, password, nickname, profileImg, }) {
         try {
@@ -33,7 +37,9 @@ let UsersService = class UsersService {
             if (existEmail) {
                 return { ok: false, error: '이미 같은 이메일이 존재합니다.' };
             }
-            await this.users.save(this.users.create({ email, nickname, password, profileImg }));
+            const user = await this.users.save(this.users.create({ email, nickname, password, profileImg }));
+            const verification = await this.verifications.save(this.verifications.create({ user }));
+            this.mailService.sendVerificationEmail(user.email, verification.code, user.nickname);
             return { ok: true };
         }
         catch (error) {
@@ -42,13 +48,14 @@ let UsersService = class UsersService {
     }
     async login({ email, password, }) {
         try {
-            const user = this.users.findOne({ email });
+            const user = await this.users.findOne({ email }, { select: ['id', 'password'] });
             if (!user) {
                 return {
                     ok: false,
                     error: '존재하지 않는 이메일입니다.',
                 };
             }
+            console.log(user.password);
             const passwordCorrect = await (await user).checkPassword(password);
             if (!passwordCorrect) {
                 return {
@@ -77,15 +84,53 @@ let UsersService = class UsersService {
         return this.users.findOne({ id });
     }
     async editProfile(id, editProfileInput) {
-        console.log(Object.assign({}, editProfileInput));
-        return this.users.update(id, Object.assign({}, editProfileInput));
+        try {
+            const user = await this.users.findOne(id);
+            if (editProfileInput.email && editProfileInput.email !== user.email) {
+                user.email = editProfileInput.email;
+                user.emailVerified = false;
+                await this.verifications.delete({ user: { id: user.id } });
+                const verification = await this.verifications.save(this.verifications.create({ user }));
+                this.mailService.sendVerificationEmail(user.email, verification.code, user.nickname);
+            }
+            if (editProfileInput.password) {
+                user.password = editProfileInput.password;
+            }
+            if (editProfileInput.nickname) {
+                user.nickname = editProfileInput.nickname;
+            }
+            await this.users.save(user);
+            return {
+                ok: true,
+            };
+        }
+        catch (error) {
+            return { ok: false, error: '업데이트를 할 수 없습니다.' };
+        }
+    }
+    async verifyEmail(code) {
+        try {
+            const verification = await this.verifications.findOne({ code }, { relations: ['user'] });
+            if (verification) {
+                verification.user.emailVerified = true;
+                await this.users.save(verification.user);
+                await this.verifications.delete(verification.id);
+                return { ok: true };
+            }
+        }
+        catch (error) {
+            return { ok: false, error: '메일을 인증할 수 없습니다.' };
+        }
     }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(1, (0, typeorm_1.InjectRepository)(verification_entity_1.Verification)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_service_1.JwtService])
+        typeorm_2.Repository,
+        jwt_service_1.JwtService,
+        mail_service_1.MailService])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

@@ -1,6 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 import { IsEmail, IsString } from 'class-validator';
@@ -20,9 +20,8 @@ export class User extends CoreEntity {
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   @Field(() => String)
-  @IsString()
   password: string;
 
   @Column({ nullable: true })
@@ -30,17 +29,32 @@ export class User extends CoreEntity {
   @IsString()
   profileImg?: string;
 
-  @Field((type) => ProvideImage, {nullable: true})
-  @OneToMany((type) => ProvideImage, (provideImage) => provideImage.providingUser)
-  provideImage: ProvideImage[];
+  @Column({ default: false })
+  @Field(() => Boolean)
+  emailVerified: boolean;
+
+  @Column({default: false})
+  @Field(() => Boolean)
+  adminUser?: boolean;
+
+  @Field((type) => [ProvideImage], { nullable: true })
+  @OneToMany(
+    (type) => ProvideImage,
+    (provideImage) => provideImage.providingUser,
+    { eager: true },
+  )
+  provideImage?: ProvideImage[];
 
   @BeforeInsert()
+  @BeforeUpdate()
   async hashPassword(): Promise<void> {
-    try {
-      this.password = await bcrypt.hash(this.password, 10);
-    } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException();
+    if (this.password) {
+      try {
+        this.password = await bcrypt.hash(this.password, 10);
+      } catch (error) {
+        console.log(error);
+        throw new InternalServerErrorException();
+      }
     }
   }
 

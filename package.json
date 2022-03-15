@@ -1,8 +1,8 @@
 {
   "name": "better-man-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "더 좋은 사람들 server",
+  "author": "betterpeople inc.",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -28,18 +28,23 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
     "@types/bcrypt": "^5.0.0",
+    "@types/got": "^9.6.12",
     "@types/jsonwebtoken": "^8.5.6",
     "apollo-server-express": "^3.5.0",
+    "aws-sdk": "^2.1062.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",
     "cross-env": "^7.0.3",
+    "form-data": "^4.0.0",
+    "got": "^11.8.2",
     "graphql": "^15.8.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.41"
+    "typeorm": "^0.2.41",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
